@@ -21,7 +21,10 @@ function adjustForVolume(replacePos, replaceState, candidateEnergy, grid)
     var curVolume = grid.getVolumeIf(replacePos, replaceState);
     var connectedFoodSources = grid.getConnectedFoodSources();
     var idealDelta = curVolume - constants.IDEAL_VOLUME * connectedFoodSources;
-    return candidateEnergy + constants.VOLUME_WEIGHT * idealDelta;
+    var newEnergy = candidateEnergy + constants.VOLUME_WEIGHT * idealDelta;
+    if(replaceState == constants.UNOCCUPIED)
+        newEnergy -= 0.1;
+    return newEnergy;
 }
 
 // Only works with occupied v unoccupied
