@@ -37,7 +37,8 @@ function calculateAcceptProbability(origEnergy, candidateEnergy)
     else
     {
         var acceptanceCutOff = -(deltaEnergy + constants.YIELD_OFFSET);
-        var acceptanceCutOff = acceptanceCutOff / constants.FLUCTUATION_AMPLITUDE;
+        var acceptanceCutOff = 
+            acceptanceCutOff / constants.FLUCTUATION_AMPLITUDE;
         return Math.exp(acceptanceCutOff);
     }
 }
@@ -85,7 +86,8 @@ function runMetropolisCell(grid, targetCell)
     // Make sure not copying obstacle or food source
     var invalid;
     invalid = origState == targetNeighborState;
-    invalid = invalid || targetNeighborState == constants.OCCUPIED_CONNECTED_FOOD;
+    invalid = invalid || targetNeighborState == 
+        constants.OCCUPIED_CONNECTED_FOOD;
     invalid = invalid || targetNeighborState == constants.OCCUPIED_FOOD;
     invalid = invalid || targetNeighborState == constants.OCCUPIED_OBSTACLE;
     invalid = invalid || origState == constants.OCCUPIED_CONNECTED_FOOD;

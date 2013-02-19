@@ -8,36 +8,40 @@ Produced under the guidance of "Professor Ken Anderson":http://www.cs.colorado.e
 
 h2. Background
 
-Physarum Polycephalum, a single cell organism without central planning, collects together to create food-gathering structures that rival the complexity and efficiency of artificial networks. However, while planning a transportation system may take days or longer for mankind, slime mold can do it in hours. Collection of these cells use pheromones or "chemical messengers" to optimize their internal structure as an emergent self-organizing system and, leveraging this, researchers have modeled transportation systems, wireless networks, and many other artificial systems using Physarum Polycephalum cells and carefully placed food sources (Steven Johnson's "Emergence":http://www.amazon.com/Emergence-Connected-Brains-Cities-Software/dp/0684868768).
+Physarum Polycephalum, a single cell organism, collects together to create food-gathering structures that rival the complexity and efficiency of artificial networks. However, while planning a transportation system may take days or longer for mankind, slime mold can do it in hours without any centralized intelligence. Leveraging these collections of cells and their use of pheromones (chemical messengers) to optimize their internal structure, researchers have modeled transportation systems, wireless networks, and many other artificial systems ("Emergence":http://www.amazon.com/Emergence-Connected-Brains-Cities-Software/dp/0684868768). Slime mold is one example of an emergent self-organizing complex adaptive system.
 
 
 h2. Motivation
 
-If a mathematical model can capture the internal optimizing behavior of Physarum Polycephalum, computers could also perform rapid network optimization just as quickly the mold or, likely, even faster than the natural organism. This could help engineers create smarter transportation systems, computer networks, etc. This HTML5 canvas-based demo shows one computational model of Physarum Polycephalum as it reaches out to randomly placed food sources.
+If a mathematical / computational model can capture the internal optimizing behavior of Physarum Polycephalum, computers could also perform rapid network optimization just as quickly or even faster than the natural organism. This could help engineers create "smarter" transportation systems, computer networks, etc. This HTML5 canvas-based display demonstrates a possible computational model for Physarum Polycephalum.
 
 
 h2. Informal Model Description
 
 Following the Cellular Potts Model explored in Niklas B. Semmler's "Emergent Networks: A Slime Mold Simulation":http://staff.science.uva.nl/~bredeweg/pdf/BSc/20102011/Semmler.pdf, this simulation runs off of a chemical field using "pheromones" like actual slime mold. However, instead of cells giving off these chemical messengers, this model approximates the same phenomenons by having the simulation obstacles and food give off the chemical signals themselves. Therefore, this simulation uses the following chemical attractors and repellents:
-* Other living slime mold cells attract slightly with quick pheromone decay (small negative number and quick decay).
+* Living slime mold cells attract other slime mold cells slightly with quick pheromone decay (small negative number and quick decay).
 * Food gives of a strong attractant with slow decay (large negative number and slow decay).
 * Obstacles give off a strong but quickly decaying repellent (large positive number and quick decay).
 
-The energy of the organism is the sum of these pheromones at the spaces occupied by the mold. Thus, each step in the simulation effectively looks at each space S and randomly selects a neighboring space N. The simulation then tries copying the contents of N into S and, if the energy of the organism decreases by copying the contents of that cell, the copy is made. Otherwise, the copy is only made with a probability. Note that the mold also tries to maintain an ideal volume that depends on the number of pieces food the mold has connected to. This keeps the mold from simply growing to occupy the entire simulation grid without trying to optimize itself.
+The energy of the organism equals the sum of the pheromone values at the spaces occupied by the mold. Thus, each step in the simulation effectively looks at each space S and randomly selects a neighboring space N. The simulation then tries copying the contents of N into S and, if the energy of the organism decreases by copying the contents of that cell, the copy is made. Otherwise, the copy is only made with a probability.
+
+Finally, this model of slime mold also tries to maintain an ideal volume that depends on the number of pieces food the mold has connected to. This keeps the mold from simply growing to occupy the entire simulation grid without trying to optimize itself.
 
 The simulation grid is randomized and then a food source and slime mold cell are placed at the center of the grid.
 
 
 h2. Formal Model Description.
 
-This simulation progresses through "Markov Chain Monte Carlo and the Metropolis Algorithm":http://www.youtube.com/watch?v=h1NOS_wxgGg with the goal of reducing organism energy. Organism energy is defined as the sum of the pheromones at the spaces occupied by the mold where the simulation pheromones are the following:
+This simulation progresses through "Markov Chain Monte Carlo and the Metropolis Algorithm":http://www.youtube.com/watch?v=h1NOS_wxgGg with the goal of reducing organism energy or, in other words, the sum of the pheromones at the spaces occupied by the mold. The simulation pheromones are defined as the following:
 * Other living slime mold cells attract slightly with quick pheromone decay (small negative number and quick decay).
 * Food gives of a strong attractant with slow decay (large negative number and slow decay).
 * Obstacles give off a strong but quickly decaying repellent (large positive number and quick decay).
 
-The slime mold energy function also incurs a volume adjustment. Given a linear function which relates "ideal volume" to the number of food sources the mold has connected to, the energy of a mold increases when it extends beyond its ideal volume and decreases when it is below it. This instance of "MCMC":http://vcla.stat.ucla.edu/old/MCMC/MCMC_tutorial/Lect1_MCMC_Intro.pdf runs having each space S randomly select a neighbor N and tries copying the state of N into S. If the energy decreases by the move, the copy is accepted. Otherwise, the move is accepted by probability as is typical in the "Metropolis Algorithm":http://vcla.stat.ucla.edu/old/MCMC/MCMC_tutorial/Lect2_Basic_MCMC.pdf.
+The slime mold energy function also incurs a volume adjustment. Given a linear function which relates "ideal volume" to the number of food sources the mold has connected to, the energy of a mold increases when it extends beyond its ideal volume and decreases when it is below it.
 
-The simulation starts with a randomized grid and then a food source and slime mold cell are placed at the center of the grid.
+This instance of "MCMC":http://vcla.stat.ucla.edu/old/MCMC/MCMC_tutorial/Lect1_MCMC_Intro.pdf runs having each space S randomly select a neighbor N before trying copying the state of N into S. If the energy decreases by the move, the copy is accepted. Otherwise, the move is accepted by probability as is typical in the "Metropolis Algorithm":http://vcla.stat.ucla.edu/old/MCMC/MCMC_tutorial/Lect2_Basic_MCMC.pdf.
+
+The simulation starts with a randomized grid before a starting food source and slime mold cell are placed at the center of the grid.
 
 
 h2. Visual Representation
@@ -49,9 +53,9 @@ The following color coding scheme is used:
 * White squares are empty.
 
 
-h2. Development
+h2. Development Environment and Standards
 
-The development environment requires Node and nodeunit. Most development operations, including changes to the specific behavior of pheromones, can be performed simply by editing constants.js.
+The development environment requires "Node.js":http://nodejs.org/ and "nodeunit":https://github.com/caolan/nodeunit. Most development operations, including changes to the specific behavior of pheromones, can be performed simply by editing constants.js. Inline documentation follows "JSDoc":http://en.wikipedia.org/wiki/JSDoc standards. However, the use of the "int" and "float" types in documentation is allowed. All lines in .js files should be limited to 80 characters. An 80% code coverage requirement should be enforced for all code outside of view logic and code dealing directly with probabilities where dependency injection requirements are deemed too high.
 
 
 h2. Testing
