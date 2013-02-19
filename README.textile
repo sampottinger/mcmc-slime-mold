@@ -2,7 +2,7 @@ h1. MCMC Slime Mold
 
 (c) 2013 "Sam Pottinger":http://gleap.org
 Released under the "GNU GPL v3":http://www.gnu.org/licenses/gpl.html license.
-Done for "CU Boulder":http://www.colorado.edu/cs/ CSCI 4900 (Software Engineering, Emergence, and Complex Adaptive Sys.)
+Done for "CU Boulder":http://www.colorado.edu/cs/ CSCI 4900 - Independent Study (Software Engineering, Emergence, and Complex Adaptive Sys.)
 Produced under the guidance of "Professor Ken Anderson":http://www.cs.colorado.edu/~kena/
 
 
