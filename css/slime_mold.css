@@ -1,0 +1,24 @@
+#canvas-container
+{
+    padding: 50px 0 0 10px;
+}
+
+#info-bar
+{
+    padding: 5px;
+    background-color: #C0C0C0;
+    margin-bottom: 0;
+}
+
+.tabbable .nav-tabs .active a
+{
+    background-color: #C0C0C0;
+}
+
+h1
+{
+    background-color: #7D3E3E;
+    margin: 0;
+    padding: 15px;
+    color: white;
+}
