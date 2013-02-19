@@ -31,7 +31,8 @@
             <div class="span7" id="description-container">
                 <div class="tabbable">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#what-pane" data-toggle="tab">Intro</a></li>
+                        <li class="active"><a href="#control-pane" data-toggle="tab">Simulation Control</a></li>
+                        <li><a href="#what-pane" data-toggle="tab">Intro</a></li>
                         <li><a href="#why-pane" data-toggle="tab">Why it Matters</a></li>
                         <li><a href="#visual-pane" data-toggle="tab">Visual Representation</a></li>
                         <li><a href="#how-pane" data-toggle="tab">Informal Explanation</a></li>
@@ -39,7 +40,16 @@
                         <li><a href="#source-pane" data-toggle="tab">Source Code</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="what-pane" class="tab-pane active">
+                        <div id="control-pane" class="tab-pane active">
+                            <h3>Simulation Controls</h3>
+                            <p>
+                                This demonstration auto-generates a simulation grid randomly (see Informal Explanation tab for more details).
+                            </p>
+                            <p>
+                                <a href="#" id="reset-link">Reset simulation >></a>
+                            </p>
+                        </div>
+                        <div id="what-pane" class="tab-pane">
                             <h3>What is this?</h3>
                             <p>
                                 Physarum Polycephalum, a single cell organism, collects together to create food-gathering structures that rival the complexity and efficiency of artificial networks. However, while planning a transportation system may take days or longer for mankind, slime mold can do it in hours without any centralized intelligence. Leveraging these collections of cells and their use of pheromones (chemical messengers) to optimize their internal structure, researchers have modeled transportation systems, wireless networks, and many other artificial systems (<a href="http://www.amazon.com/Emergence-Connected-Brains-Cities-Software/dp/0684868768">Emergence</a>). This simulation demonstrates a computational model for slime mold, one example of an emergent self-organizing complex adaptive system.

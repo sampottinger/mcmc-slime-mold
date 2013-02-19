@@ -146,10 +146,20 @@ function runMetropolisStep(grid)
     var changeEncountered = false;
     // TODO: This might not be good for locality
     var targetCells = grid_util.getActiveCells(grid);
-    for(var i in targetCells)
+    var numCells = targetCells.length;
+    var i=0
+    for(; i<numCells; i++)
     {
-        changeEncountered = changeEncountered || 
-            runMetropolisCell(grid, targetCells[i]);
+        if(runMetropolisCell(grid, targetCells[i]))
+        {
+            changeEncountered = true;
+            break;
+        }
+    }
+
+    for(; i<numCells; i++)
+    {
+        runMetropolisCell(grid, targetCells[i])
     }
 
     return changeEncountered;

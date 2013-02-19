@@ -6,6 +6,8 @@
 **/
 
 var usingNode = typeof window === 'undefined';
+var staleIterationsBeforeStopping;
+var updateTimerID = null;
 var testGrid;
 
 if(usingNode)
@@ -20,7 +22,11 @@ if(usingNode)
 /**
  * A "main" method that sets up the slime mold simulation and starts iteration.
 **/
-$(document).ready(function() {
+var resetSimulation = function()
+{
+    if(updateTimerID != null)
+        window.clearInterval(updateTimerID);
+
     testGrid = new models.Grid(GRID_HORIZ_SPACES, GRID_VERT_SPACES);
     testGrid.makeRandom(0.012, 0.006);
     centerX = Math.floor(constants.GRID_HORIZ_SPACES / 2);
@@ -40,8 +46,17 @@ $(document).ready(function() {
     );
     testGrid.setCell(startOrganism);
     view.displayGrid(testGrid);
-    window.setInterval(updateSimulation, 150);
-});
+
+    staleIterationsBeforeStopping = 20; // TODO: Constant
+    updateTimerID = window.setInterval(updateSimulation, 150);
+};
+
+
+$(document).ready(function()
+    {
+        resetSimulation();
+        $("#reset-link").click(resetSimulation);
+    });
 
 
 /**
@@ -49,6 +64,12 @@ $(document).ready(function() {
 **/
 function updateSimulation()
 {
-    metropolis.runMetropolisStep(testGrid);
+    if(!metropolis.runMetropolisStep(testGrid))
+        staleIterationsBeforeStopping--;
+    if(staleIterationsBeforeStopping <= 0)
+    {
+        updateTimerID = null;
+        window.clearInterval(updateTimerID);
+    }
     view.displayGrid(testGrid);
 }
