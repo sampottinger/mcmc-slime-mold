@@ -138,14 +138,21 @@ function runMetropolisCell(grid, targetCell)
  * ignores all non-"active" cells.
  *
  * @param {models.Grid} grid The grid to run the Metropolis algorithm on.
+ * @return {boolean} true if a cell changed and false otherwise.
 **/
 function runMetropolisStep(grid)
 {
     var targetCell = null;
+    var changeEncountered = false;
     // TODO: This might not be good for locality
     var targetCells = grid_util.getActiveCells(grid);
     for(var i in targetCells)
-        runMetropolisCell(grid, targetCells[i]);
+    {
+        changeEncountered = changeEncountered || 
+            runMetropolisCell(grid, targetCells[i]);
+    }
+
+    return changeEncountered;
 }
 
 

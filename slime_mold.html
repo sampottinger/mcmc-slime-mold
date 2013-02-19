@@ -11,8 +11,138 @@
         <script type="text/javascript" src="models.js"></script>
         <script type="text/javascript" src="util.js"></script>
         <script type="text/javascript" src="view.js"></script>
+        <script type="text/javascript" src="bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/slime_mold.css">
+
     </head>
     <body>
-        <canvas id="display-canvas" width="500" height="500"></canvas>
+        <div id="info-bar">
+            This is part of gleap.org, Sam Pottinger's professional homepage. <a href="http://gleap.org">Return to main site</a>.
+        </div>
+        <h1>Hexagonal Population Game of Life</h1>
+        <div class="row">
+            <div class="span8" id="canvas-container">
+                <canvas id="display-canvas" width="500" height="500">
+                    Whoops! It looks like your browser doesn't support canvas.
+                </canvas>
+            </div>
+            <div class="span7" id="description-container">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#what-pane" data-toggle="tab">Intro</a></li>
+                        <li><a href="#why-pane" data-toggle="tab">Why it Matters</a></li>
+                        <li><a href="#visual-pane" data-toggle="tab">Visual Representation</a></li>
+                        <li><a href="#how-pane" data-toggle="tab">Informal Explanation</a></li>
+                        <li><a href="#formal-pane" data-toggle="tab">Formal Description</a></li>
+                        <li><a href="#source-pane" data-toggle="tab">Source Code</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="what-pane" class="tab-pane active">
+                            <h3>What is this?</h3>
+                            <p>
+                                Physarum Polycephalum, a single cell organism, collects together to create food-gathering structures that rival the complexity and efficiency of artificial networks. However, while planning a transportation system may take days or longer for mankind, slime mold can do it in hours without any centralized intelligence. Leveraging these collections of cells and their use of pheromones (chemical messengers) to optimize their internal structure, researchers have modeled transportation systems, wireless networks, and many other artificial systems (<a href="http://www.amazon.com/Emergence-Connected-Brains-Cities-Software/dp/0684868768">Emergence</a>). This simulation demonstrates a computational model for slime mold, one example of an emergent self-organizing complex adaptive system.
+                            </p>
+                        </div>
+                        <div id="why-pane" class="tab-pane">
+                            <h3>Why does this matter?</h3>
+                            <p>
+                            If a mathematical / computational model can capture the internal optimizing behavior of Physarum Polycephalum, computers could also perform rapid network optimization just as quickly or even faster than the natural organism. This could help engineers create "smarter" transportation systems, computer networks, etc. This HTML5 canvas-based display demonstrates a possible computational model for Physarum Polycephalum.
+                        </p>
+                        </div>
+                        <div id="visual-pane" class="tab-pane">
+                            <h3>Visual Representation</h3>
+                            <div>
+                            <ul>
+                                <li>Green squares contain a slime mold cell.</li>
+                                <li>Grey squares contain an obstacle.</li>
+                                <li>Red squares contain food.</li>
+                                <li>White squares are empty.</li>
+                            </ul>
+                        </div>
+                        </div>
+                        <div id="how-pane" class="tab-pane">
+                            <h3>How does it work?</h3>
+                            <div>
+                            <p>
+                                Following the Cellular Potts Model explored in Niklas B. Semmler's <a href="http://staff.science.uva.nl/~bredeweg/pdf/BSc/20102011/Semmler.pdf">Emergent Networks: A Slime Mold Simulation</a>, this simulation runs off of a chemical field using "pheromones" like actual slime mold. However, instead of cells giving off these chemical messengers, this model approximates the same phenomenons by having the simulation obstacles and food give off the chemical signals themselves. Therefore, this simulation uses the following chemical attractors and repellents:
+                                <ul>
+                                    <li>
+                                        Living slime mold cells attract other slime mold cells slightly with quick pheromone decay (small negative number and quick decay).
+                                    </li>
+                                    <li>
+                                        Food gives of a strong attractant with slow decay (large negative number and slow decay).
+                                    </li>
+                                    <li>
+                                        Obstacles give off a strong but quickly decaying repellent (large positive number and quick decay).
+                                    </li>
+                                </ul>
+                            </p>
+                            <p>
+                                The energy of the organism equals the sum of the pheromone values at the spaces occupied by the mold. Thus, each step in the simulation effectively looks at each space S and randomly selects a neighboring space N. The simulation then tries copying the contents of N into S and, if the energy of the organism decreases by copying the contents of that cell, the copy is made. Otherwise, the copy is only made with a probability.
+                            </p>
+                            <p>
+                                Finally, this model of slime mold also tries to maintain an ideal volume that depends on the number of pieces food the mold has connected to. This keeps the mold from simply growing to occupy the entire simulation grid without trying to optimize itself.
+                            </p>
+                            <p>
+                                The simulation grid is randomized and then a food source and slime mold cell are placed at the center of the grid.
+                            </p>
+                        </div>
+                        </div>
+                        <div id="formal-pane" class="tab-pane">
+                            <h3>Formal Model Description</h3>
+                            <div>
+                            <p>
+                                This simulation progresses through <a href="http://www.youtube.com/watch?v=h1NOS_wxgGg">Markov Chain Monte Carlo and the Metropolis Algorithm</a> with the goal of reducing organism energy or, in other words, the sum of the pheromones at the spaces occupied by the mold. The simulation pheromones are defined as the following:
+                                <ul>
+                                    <li>
+                                        Living slime mold cells attract other slime mold cells slightly with quick pheromone decay (small negative number and quick decay).
+                                    </li>
+                                    <li>
+                                        Food gives of a strong attractant with slow decay (large negative number and slow decay).
+                                    </li>
+                                    <li>
+                                        Obstacles give off a strong but quickly decaying repellent (large positive number and quick decay).
+                                    </li>
+                                </ul>
+                            </p>
+                            <p>
+                                The slime mold energy function also incurs a volume adjustment. Given a linear function which relates "ideal volume" to the number of food sources the mold has connected to, the energy of a mold increases when it extends beyond its ideal volume and decreases when it is below it.
+                            </p>
+                            <p>
+                                This instance of <a href="http://vcla.stat.ucla.edu/old/MCMC/MCMC_tutorial/Lect1_MCMC_Intro.pdf">MCMC</a> runs having each space S randomly select a neighbor N before trying copying the state of N into S. If the energy decreases by the move, the copy is accepted. Otherwise, the move is accepted by probability as is typical in the <a href="http://vcla.stat.ucla.edu/old/MCMC/MCMC_tutorial/Lect2_Basic_MCMC.pdf">Metropolis Algorithm</a>.
+                            </p>
+                            <p>
+                                The simulation starts with a randomized grid before a starting food source and slime mold cell are placed at the center of the grid.
+                            </p>
+                        </div>
+                        </div>
+                        <div id="source-pane" class="tab-pane">
+                            <h3>Source Code and Resources</h3>
+                            <p>
+                                Source code open source and available at <a href="https://github.com/Samnsparky/mcmc-slime-mold">http://github.com/Samnsparky/mcmc-slime-mold</a>.
+                            </p>
+                            <p>
+                                <ul>
+                                    <li>
+                                        Released under the "GNU GPL v3":http://www.gnu.org/licenses/gpl.html license.
+                                    </li>
+                                    <li> 
+                                        Uses the Cellular Potts Model with <a href="http://staff.science.uva.nl/~bredeweg/pdf/BSc/20102011/Semmler.pdf">Emergent Networks: A Slime Mold Simulation</a> as a guide.
+                                    </li>
+                                    <li>
+                                        The entire solution runs in JavaScript (ECMAScript), targeting the HTML5 canvas element. The client side leverages <a href="http://jquery.com/">jQuery</a>, released under the <a href="http://jquery.org/license/">MIT License</a>.
+                                    </li>
+                                    <li>
+                                        This page also uses <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> under the <a href="https://github.com/twitter/bootstrap/blob/master/LICENSE">Apache License</a>.
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
