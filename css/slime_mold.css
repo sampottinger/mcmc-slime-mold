@@ -1,3 +1,8 @@
+html
+{
+    min-width:1150px;
+}
+
 #canvas-container
 {
     padding: 50px 0 0 10px;
