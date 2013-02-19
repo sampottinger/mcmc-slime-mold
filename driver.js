@@ -68,8 +68,8 @@ function updateSimulation()
         staleIterationsBeforeStopping--;
     if(staleIterationsBeforeStopping <= 0)
     {
-        updateTimerID = null;
         window.clearInterval(updateTimerID);
+        updateTimerID = null;
     }
     view.displayGrid(testGrid);
 }

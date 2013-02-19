@@ -10,6 +10,11 @@
     margin-bottom: 0;
 }
 
+#description-container
+{
+    padding-top: 30px;
+}
+
 .tabbable .nav-tabs .active a
 {
     background-color: #C0C0C0;
