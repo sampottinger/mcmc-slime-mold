@@ -1,6 +1,17 @@
+/**
+ * Tests for the data models for a slime mold.
+ *
+ * @author Sam Pottinger
+ * @license GNU GPL v3
+**/
+
 var constants = require("./constants")
 var models = require("./models");
 
+
+/**
+ * Test getting active cells in the simulation grid.
+**/
 exports.testGetActiveCells = function(test)
 {
     var testGrid = new models.Grid(5, 5);
@@ -26,6 +37,10 @@ exports.testGetActiveCells = function(test)
     test.done();
 }
 
+
+/**
+ * Test making an update to a grid's chemical field.
+**/
 exports.testUpdateChemicalField = function(test)
 {
     var testGrid = new models.Grid(5, 5);

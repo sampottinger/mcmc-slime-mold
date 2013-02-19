@@ -1,16 +1,23 @@
+/**
+ * Settings, weights, and other constants for a slime mold simulation.
+ *
+ * @author Sam Pottinger
+ * @license GNU GPL v3
+**/
+
 var usingNode = typeof window === 'undefined';
 var constants = {};
 
-var FLUCTUATION_AMPLITUDE = 0.015;
-var IDEAL_VOLUME = 45;
+var FLUCTUATION_AMPLITUDE = 0.01;
+var IDEAL_VOLUME = 40;
 
-var COHESION_ATTR = 0.4;
+var COHESION_ATTR = -0.5;
 var FOOD_ATTR = -6;
-var OBSTACLE_REP = 10;
+var OBSTACLE_REP = 6;
 
 var FOOD_ATTR_DECAY = 1;
-var COHESION_ATTR_DECAY = 0.2;
-var OBSTACLE_ATTR_DECAY = 5;
+var COHESION_ATTR_DECAY = 0.25;
+var OBSTACLE_ATTR_DECAY = 3;
 
 var UNOCCUPIED = 0;
 var OCCUPIED_FOOD = 1;

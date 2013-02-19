@@ -16,6 +16,17 @@ if(usingNode)
     var math_util = require("./math_util");
 }
 
+
+/**
+ * Calculate the probability of making a change in a grid.
+ *
+ * @param {float} origEnergy The original energy of the cell that may be
+ *      changed.
+ * @param {float} candidateEnergy The new energy of the cell after the potential
+ *      change.
+ * @return {float} The probability under the metropolis algorithm that this
+ *      change should occur.
+**/
 function calculateAcceptProbability(origEnergy, candidateEnergy)
 {
     var deltaEnergy = candidateEnergy - origEnergy;
@@ -31,11 +42,34 @@ function calculateAcceptProbability(origEnergy, candidateEnergy)
     }
 }
 
+
+/**
+ * Determines if an even with the given chance should be accepted.
+ *
+ * Generates a random number to see if an event with the given chance should be
+ * accepted.
+ *
+ * @param {float} The chance (0 to 1) that this event should be accepted.
+ * @return {boolean} true if this event should be accepted and false otherwise.
+**/
 function shouldAccept(acceptChance)
 {
     return Math.random() <= acceptChance;
 }
 
+
+/**
+ * Run the metropolis algorithm on a given grid cell.
+ *
+ * Runs the metropolis algorithm on a given grid cell, potentially changing its
+ * state given the randomly selected neighbor to potentially copy and some
+ * randomness.
+ *
+ * @param {models.Grid} grid The grid to run the metropolis algorithm on.
+ * @param {models.GridCell} targetCell The cell to run the metropolis algorithm
+ *      on.
+ * @return {boolean} true if a change was made and false otherwise.
+**/
 function runMetropolisCell(grid, targetCell)
 {
     // Select target cells
@@ -76,8 +110,7 @@ function runMetropolisCell(grid, targetCell)
     if(shouldAccept(acceptChance))
     {
         // Don't allow to break connections
-        /*var willBreak = targetNeighbor.getState() == constants.UNOCCUPIED;
-        willBreak = willBreak && grid_util.willBreakIfLost(grid, targetCell);
+        /*var willBreak = grid_util.willBreakIfLost(grid, targetCell);
         if(willBreak)
             return false;*/
 
@@ -95,14 +128,24 @@ function runMetropolisCell(grid, targetCell)
     }
 }
 
-// TODO: This might not be good for locality
+
+/**
+ * Run a step in the Metropolis algorithm.
+ *
+ * Runs the Metropolis algorithm on all of the given grid's active cells but
+ * ignores all non-"active" cells.
+ *
+ * @param {models.Grid} grid The grid to run the Metropolis algorithm on.
+**/
 function runMetropolisStep(grid)
 {
     var targetCell = null;
+    // TODO: This might not be good for locality
     var targetCells = grid_util.getActiveCells(grid);
     for(var i in targetCells)
         runMetropolisCell(grid, targetCells[i]);
 }
+
 
 if(usingNode)
 {

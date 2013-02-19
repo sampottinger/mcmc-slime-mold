@@ -1,3 +1,10 @@
+/**
+ * Presenter / view logic for showing the state of a slime mold simulation.
+ *
+ * @author Sam Pottinger
+ * @license GNU GPL v3
+**/
+
 var usingNode = typeof window === 'undefined';
 var view = {};
 
@@ -7,6 +14,12 @@ if(usingNode)
     var models = require("./models");
 }
 
+
+/**
+ * Display a slime mold simulation grid.
+ *
+ * @param {models.Grid} grid The slime mold simulation grid to display.
+**/
 function displayGrid(grid)
 {
     var cell;
@@ -70,6 +83,7 @@ function displayGrid(grid)
         }
     }
 }
+
 
 if(usingNode)
 {

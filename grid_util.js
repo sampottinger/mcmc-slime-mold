@@ -1,3 +1,10 @@
+/**
+ * Convenience routines for high level logic for models.Grid.
+ *
+ * @author Sam Pottinger
+ * @license GNU GPL v3
+**/
+
 var usingNode = typeof window === 'undefined';
 var grid_util = {};
 
@@ -7,6 +14,15 @@ if(usingNode)
     var models = require("./models");
 }
 
+
+/**
+ * Determines if the given pos is within the given grid.
+ *
+ * @param {models.Grid} grid The grid to check bounds for.
+ * @para {models.GridPosition} pos The position to check.
+ * @return {boolean} true if pos is within the bounds of grid and false
+ *      otherwise.
+**/
 function isInRange(grid, pos)
 {
     var posX = pos.getX();
@@ -16,6 +32,16 @@ function isInRange(grid, pos)
     return xInRange && yInRange;
 }
 
+
+/**
+ * Get the positions neighboring (adjacent and diagonal) the given position.
+ *
+ * @param {models.Grid} grid The grid to get neighboring cells from.
+ * @param {models.GridPosition} pos The position to get neighboring positions
+ *      for.
+ * @return {array} Array with 8 elements consisting of neighboring
+ *      models.GridPositions and null.
+**/
 function getNeighborPos(grid, centerPos)
 {
     var posX = centerPos.getX();
@@ -50,6 +76,15 @@ function getNeighborPos(grid, centerPos)
     return neighborPositions;
 }
 
+
+/**
+ * Get the cells neighboring (adjacent and diagonal) the given position.
+ *
+ * @param {models.Grid} grid The grid to get neighboring cells from.
+ * @param {models.GridPosition} pos The position to get neighboring cells for.
+ * @return {array} Array with 8 elements consisting of neighboring
+ *      models.GridCells and null.
+**/
 function getNeighbors(grid, cell)
 {
     var neighborPos = getNeighborPos(grid, cell.getPos());
@@ -64,6 +99,16 @@ function getNeighbors(grid, cell)
     );
 }
 
+
+/**
+ * Get the state of the call at the given coordinates.
+ *
+ * @param {int} x The x component of the coordinate to look up.
+ * @param {int} y The y component of the coordinate to look up.
+ * @return {int} Constant corresponding to value in constants.js describing the
+ *      state of the cell at the given coordinate. Returns constants.UNOCCUPIED
+ *      if coordinates outside bounds of grid.
+**/
 function getCellStateCoordiantes(grid, x, y)
 {
     var cell = grid.getCellByCoord(x, y);
@@ -73,34 +118,40 @@ function getCellStateCoordiantes(grid, x, y)
         return cell.getState();
 }
 
+
+/**
+ * Determine if the given coordinate is occupied by an organism.
+ *
+ * @param {models.Grid} grid The grid to check for an organism in.
+ * @param {int} x The x component of the coordinate to look up.
+ * @param {int} y The y component of the coordinate to look up.
+ * @return {boolean} true if the given coordinate is occupied by an organism
+ *      and false otherwise. Returns false if coordinates out of bounds of grid.
+**/
 function isCoordianteOccupiedByOrganism(grid, x, y)
 {
     return getCellStateCoordiantes(grid, x, y) == constants.OCCUPIED_ORGANISM;
 }
 
-function willBreakIfLost(grid, targetCell)
-{
-    var edgeNeighbors = 0;
-    var targetPos = targetCell.getPos();
-    var x = targetPos.getX();
-    var y = targetPos.getY();
 
-    if(targetCell.getState() == constants.UNOCCUPIED)
-        return false;
-
-    edgeNeighbors += isCoordianteOccupiedByOrganism(grid, x + 1, y) ? 1 : 0;
-    edgeNeighbors += isCoordianteOccupiedByOrganism(grid, x - 1, y) ? 1 : 0;
-    edgeNeighbors += isCoordianteOccupiedByOrganism(grid, x, y - 1) ? 1 : 0;
-    edgeNeighbors += isCoordianteOccupiedByOrganism(grid, x, y + 1) ? 1 : 0;
-
-    return edgeNeighbors == 2;
-}
-
+/**
+ * Get the cells (plus a few) that may change in the next metropolis step.
+ *
+ * Get the cells that are "naturally active" (previously or currently contain an
+ * organism) or that border a "naturally" active cell.
+ *
+ * @param {models.Grid} The grid to find active cells in.
+ * @return {array} Array of models.GridCell of cells that are "active" cells.
+ * @note Guaranteed to contain all cells that might change state in the next
+ *      metropolis step but may contain some cells that cannot change in the
+ *      next step.
+**/
 function getActiveCells(grid)
 {
     var activeCellPos = grid.getActivePos();
     return activeCellPos.map(grid.getCell);
 }
+
 
 if(usingNode)
 {
@@ -109,7 +160,6 @@ if(usingNode)
     exports.getNeighbors = getNeighbors;
     exports.getCellStateCoordiantes = getCellStateCoordiantes;
     exports.isCoordianteOccupiedByOrganism = isCoordianteOccupiedByOrganism;
-    exports.willBreakIfLost = willBreakIfLost;
     exports.getActiveCells = getActiveCells;
 }
 else
@@ -119,6 +169,5 @@ else
     grid_util.getNeighbors = getNeighbors;
     grid_util.getCellStateCoordiantes = getCellStateCoordiantes;
     grid_util.isCoordianteOccupiedByOrganism = isCoordianteOccupiedByOrganism;
-    grid_util.willBreakIfLost = willBreakIfLost;
     grid_util.getActiveCells = getActiveCells;
 }

@@ -1,7 +1,19 @@
+/**
+ * Tests for grid convenience routines / logic.
+ *
+ * @author Sam Pottinger
+ * @license GNU GPL v3
+**/
+
+var constants = require("./constants");
 var grid_util = require("./grid_util");
 var models = require("./models");
 var test_util = require("./test_util");
 
+
+/**
+ * Test detection of positions outside the bounds of a grid.
+**/
 exports.testIsInRange = function(test)
 {
     var testGrid = new models.Grid(5, 5);
@@ -21,6 +33,10 @@ exports.testIsInRange = function(test)
     test.done();
 }
 
+
+/**
+ * Test getting the positions that neighbor a position.
+**/
 exports.testGetNeighborPos = function(test)
 {
     var testGrid = new models.Grid(5, 5);
@@ -49,6 +65,10 @@ exports.testGetNeighborPos = function(test)
     test.done();
 };
 
+
+/**
+ * Test getting cells that neighbor a cell.
+**/
 exports.testGetNeighbors = function(test)
 {
     var testGrid = new models.Grid(5, 5);
@@ -75,6 +95,10 @@ exports.testGetNeighbors = function(test)
     test.done();
 };
 
+
+/**
+ * Test getting the state of a cell given its coordinates.
+**/
 exports.testGetCellStateCoordiantes = function(test)
 {
     var testGrid = new models.Grid(5, 5);
@@ -95,13 +119,17 @@ exports.testGetCellStateCoordiantes = function(test)
     test.done();
 };
 
+
+/**
+ * Test determining if a cell is occupied by an organism given coordinates.
+**/
 exports.testIsCoordianteOccupiedByOrganism = function(test)
 {
     var testGrid = new models.Grid(5, 5);
     var pos1 = new models.GridPosition(1, 1);
     var pos2 = new models.GridPosition(2, 2);
-    var cell1 = new models.GridCell(pos1, OCCUPIED_OBSTACLE, 2);
-    var cell2 = new models.GridCell(pos2, OCCUPIED_FOOD, 2);
+    var cell1 = new models.GridCell(pos1, constants.OCCUPIED_OBSTACLE, 2);
+    var cell2 = new models.GridCell(pos2, constants.OCCUPIED_FOOD, 2);
 
     testGrid.setCellNoChem(cell1);
     testGrid.setCellNoChem(cell2);
@@ -117,48 +145,17 @@ exports.testIsCoordianteOccupiedByOrganism = function(test)
     test.done();
 };
 
-exports.testWillBreakIfLost = function(test)
-{
-    var testGrid = new models.Grid(5, 5);
-    var pos11 = new models.GridPosition(0, 0);
-    var pos12 = new models.GridPosition(1, 0);
-    var pos13 = new models.GridPosition(2, 0);
-    var pos21 = new models.GridPosition(4, 0);
-    var pos22 = new models.GridPosition(4, 1);
-    var pos23 = new models.GridPosition(4, 2);
 
-    var cell11 = new models.GridCell(pos11, OCCUPIED_ORGANISM, 1);
-    testGrid.setCellNoChem(cell11);
-    var cell12 = new models.GridCell(pos12, OCCUPIED_ORGANISM, 1);
-    testGrid.setCellNoChem(cell12);
-    var cell13 = new models.GridCell(pos13, OCCUPIED_ORGANISM, 1);
-    testGrid.setCellNoChem(cell13);
-
-    var cell21 = new models.GridCell(pos21, OCCUPIED_ORGANISM, 1);
-    testGrid.setCellNoChem(cell21);
-    var cell22 = new models.GridCell(pos22, OCCUPIED_ORGANISM, 1);
-    testGrid.setCellNoChem(cell22);
-    var cell23 = new models.GridCell(pos23, OCCUPIED_ORGANISM, 1);
-    testGrid.setCellNoChem(cell23);
-
-    test.ok(!grid_util.willBreakIfLost(testGrid, cell11));
-    test.ok(grid_util.willBreakIfLost(testGrid, cell12));
-    test.ok(!grid_util.willBreakIfLost(testGrid, cell13));
-
-    test.ok(!grid_util.willBreakIfLost(testGrid, cell21));
-    test.ok(grid_util.willBreakIfLost(testGrid, cell22));
-    test.ok(!grid_util.willBreakIfLost(testGrid, cell23));
-
-    test.done();
-};
-
+/**
+ * Test enumerating "active" cells in a grid.
+**/
 exports.testGetActiveCells = function(test)
 {
     var testGrid = new models.Grid(5, 5);
     var pos1 = new models.GridPosition(1, 1);
     var pos2 = new models.GridPosition(2, 1);
-    var cell1 = new models.GridCell(pos1, OCCUPIED_ORGANISM, 1);
-    var cell2 = new models.GridCell(pos2, OCCUPIED_ORGANISM, 1);
+    var cell1 = new models.GridCell(pos1, constants.OCCUPIED_ORGANISM, 1);
+    var cell2 = new models.GridCell(pos2, constants.OCCUPIED_ORGANISM, 1);
 
     testGrid.replaceCell(cell1, cell1);
     testGrid.replaceCell(cell2, cell2);

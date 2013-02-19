@@ -1,3 +1,7 @@
+/**
+ * Unit testing convenience functions.
+**/
+
 exports.testObjInArray = function(elem, targetArray)
 {
     for(var i in targetArray)

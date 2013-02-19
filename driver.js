@@ -1,3 +1,10 @@
+/**
+ * Driver that starts iteration in the slime mold simulation.
+ *
+ * @author Sam Pottinger
+ * @license GNU GPL v3
+**/
+
 var usingNode = typeof window === 'undefined';
 var testGrid;
 
@@ -9,6 +16,10 @@ if(usingNode)
     var view = require("./view");
 }
 
+
+/**
+ * A "main" method that sets up the slime mold simulation and starts iteration.
+**/
 $(document).ready(function() {
     testGrid = new models.Grid(GRID_HORIZ_SPACES, GRID_VERT_SPACES);
     testGrid.makeRandom(0.012, 0.006);
@@ -32,6 +43,10 @@ $(document).ready(function() {
     window.setInterval(updateSimulation, 150);
 });
 
+
+/**
+ * Take a step in the metropolis algorithm running the slime mold simulation.
+**/
 function updateSimulation()
 {
     metropolis.runMetropolisStep(testGrid);
