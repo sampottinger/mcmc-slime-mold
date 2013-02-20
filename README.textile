@@ -2,7 +2,7 @@ h1. MCMC Slime Mold
 
 (c) 2013 "Sam Pottinger":http://gleap.org
 Released under the "GNU GPL v3":http://www.gnu.org/licenses/gpl.html license.
-Done for "CU Boulder":http://www.colorado.edu/cs/ CSCI 4900 (Software Engineering, Emergence, and Complex Adaptive Sys.)
+Done for "CU Boulder":http://www.colorado.edu/cs/ CSCI 4900 - Independent Study (Software Engineering, Emergence, and Complex Adaptive Sys.)
 Produced under the guidance of "Professor Ken Anderson":http://www.cs.colorado.edu/~kena/
 
 
@@ -30,7 +30,7 @@ Finally, this model of slime mold also tries to maintain an ideal volume that de
 The simulation grid is randomized and then a food source and slime mold cell are placed at the center of the grid.
 
 
-h2. Formal Model Description
+h2. Formal Model Description.
 
 This simulation progresses through "Markov Chain Monte Carlo and the Metropolis Algorithm":http://www.youtube.com/watch?v=h1NOS_wxgGg with the goal of reducing organism energy or, in other words, the sum of the pheromones at the spaces occupied by the mold. The simulation pheromones are defined as the following:
 * Other living slime mold cells attract slightly with quick pheromone decay (small negative number and quick decay).
