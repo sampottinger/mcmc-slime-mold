@@ -25,6 +25,11 @@ html
     background-color: #C0C0C0;
 }
 
+.margined-info-section
+{
+    margin-bottom: 50px;
+}
+
 h1
 {
     background-color: #7D3E3E;
